@@ -59,11 +59,11 @@ const Header = styled.div`
 
 const Notification = styled.div`
   background-color: #fff;
+  border: 1px solid #585555;
   border-radius: 10px;
-  margin:.5rem;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+  margin: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 0.3rem;
-  border: 1px solid #eee;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -86,11 +86,12 @@ const Notification = styled.div`
 `;
 
 const NotificationBoard = styled.div`
-  background-color: #f8f5f5cf;
+  background-color: #ffffff;
   width: 40vw;
   padding: 1rem;
-  height: 70vh;
-  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);
+  height: 90vh;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.1);
+  
   backdrop-filter: blur(3px);
 `;
 const Backdrop = styled.div`

@@ -24,7 +24,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/auth/login",
+        "https://social-app-ukv1.onrender.com/auth/login",
         {
           email,
           password,
