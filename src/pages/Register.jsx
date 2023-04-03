@@ -31,7 +31,7 @@ export default function Login() {
     try {
       const profilepic = await toBase64(profile);
       const { data } = await axios.post(
-        "http://localhost:5000/auth/register",
+        "https://social-app-ukv1.onrender.com/auth/register",
         {
           name,
           password,
