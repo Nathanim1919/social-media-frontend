@@ -3,7 +3,7 @@ import {
   Routes
 } from 'react-router-dom';
 import AddNewPost from './pages/AddNewPost';
-import AllFriends from './pages/AllFriends';
+// import AllFriends from './pages/AllFriends';
 import FriendProfile from './pages/FriendProfile';
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
@@ -16,7 +16,6 @@ import styled from 'styled-components';
 import Parentpage from './pages/Parentpage';
 import ChattingPage from './pages/chat/ChattingPage';
 
-
 function App() {
   return ( 
     <Container >
@@ -28,8 +27,8 @@ function App() {
         <Route Route path = "/" element = {< Parentpage/>} >
             <Route Route path = "user/:id" element = {< HomePage />} />
             <Route path = "user/:id/posts/:post_id" element = {  < PostDetail/>}/>
-            <Route path = "user/:id/friends" element = {  < AllFriends/>}/>
-            <Route path = "user/:id/friends/:friend_id" element = {  < FriendProfile/>}/>
+            {/* <Route path = "user/:id/friends" element = {  < AllFriends/>}/> */}
+            <Route path = "user/:id/friends/:f_id" element = {  < FriendProfile/>}/>
             <Route path = "user/:id/addpost" element = {  < AddNewPost/>}/>
             <Route path = "user/:id/profile" element = {  < ProfilePage/>}/>
         </Route>

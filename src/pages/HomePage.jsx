@@ -35,7 +35,6 @@ export default function () {
         `http://localhost:5000/posts/${post._id}/comments`
       );
       setComments(comment.data);
-      console.log(comments);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +51,7 @@ export default function () {
       }
     };
     getUser();
-  }, [id]);
+  }, []);
 
   // get all users from the database
   useEffect(() => {
@@ -80,11 +79,11 @@ export default function () {
       }
     };
     getAllPosts();
-  }, []);
+  }, [isBox]);
 
 
   const isFollowing = (us) => {
-    return user.following.some((u) => u._id === us._id);
+    return user.following && user.following.some((u) => u._id === us._id);
   };
   const isFollower = (us) => {
     return us.followers.some((u) => u._id === user._id);
@@ -170,7 +169,9 @@ export default function () {
       <Container>
         <Welcome>
           <div>
-            <h2>welcome back, {user.name}</h2>
+            <h2>
+              welcome back, <span>{user.name}</span>
+            </h2>
           </div>
           <div>
             <NavLink onClick={() => setIsBox(true)}>Post</NavLink>
@@ -321,24 +322,30 @@ export default function () {
 
           <div>
             <AllUser>
-              {allusers.map(
-                (u) =>
-                  user._id !== u._id && (
-                    <UserInfo>
-                      <div>
-                        <UserProfile>
-                          <img src={u.profile} alt="" />
-                        </UserProfile>
-                        <Info>
-                          <h5>{u.name}</h5>
-                          <p>{u.profession}</p>
-                        </Info>
-                      </div>
-                      <NavLink onClick={() => followUser(u)}>
-                        {isFollowing(u) ? "Unfollow" : "Follow"}
+              {!allusers ? (
+                <Loading />
+              ) : (
+                allusers.map(
+                  (u) =>
+                    user._id !== u._id && (
+                      <NavLink to={`/user/${user._id}/friends/${u._id}`}>
+                        <UserInfo>
+                          <div>
+                            <UserProfile>
+                              <img src={u.profile} alt="" />
+                            </UserProfile>
+                            <Info>
+                              <h5>{u.name}</h5>
+                              <p>{u.profesion}</p>
+                            </Info>
+                          </div>
+                          <NavLink onClick={() => followUser(u)}>
+                            {isFollowing(u) ? "Unfollow" : "Follow"}
+                          </NavLink>
+                        </UserInfo>
                       </NavLink>
-                    </UserInfo>
-                  )
+                    )
+                )
               )}
             </AllUser>
           </div>
@@ -456,6 +463,11 @@ const AllUser = styled.div`
   height: 77vh;
   overflow-y: auto;
   background-color: #eee;
+
+  >a{
+    text-decoration:none;
+    color:#333;
+  }
 `;
 const UserInfo = styled.div`
   box-shadow: 0 8px 17px rgba(0, 0, 0, 0.01);
@@ -496,7 +508,9 @@ const UserProfile = styled.div`
   overflow: hidden;
 
   > img {
+    height:100%;
     width: 100%;
+    object-fit:cover;
   }
 `;
 const AllPosts = styled.div`
@@ -547,6 +561,9 @@ const ProfileImage = styled.div`
 
   > img {
     width: 100%;
+    width: 40px;
+    height: 40px;
+    object-fit:cover;
   }
 `;
 const Container = styled.div`
@@ -606,10 +623,9 @@ const Welcome = styled.div`
   display: grid;
   place-items: center;
   grid-template-columns: 50% 50%;
-  border: 1px solid #eee;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.01);
   margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.1rem 1rem;
+  font-size:.79rem;
 
   > div:nth-child(1) {
     > * {
@@ -618,6 +634,16 @@ const Welcome = styled.div`
     }
     > p {
       color: #76797a;
+    }
+    >h2{
+     
+      >span{
+        text-shadow:0 10px 10px rgba(0,0,0,.3);
+        padding:.2rem 1rem;
+        background:linear-gradient(45deg,#3ba7ee,#321df3);
+        color:white;
+        border-radius:5px;
+      }
     }
   }
 
@@ -714,7 +740,9 @@ const ProfileImages = styled.div`
   overflow: hidden;
 
   > img {
-    width: 100%;
+    object-fit: cover;
+    width:100%;
+    height:100%;
   }
 `;
 const CoverPhotot = styled.div`
@@ -724,6 +752,8 @@ const CoverPhotot = styled.div`
   overflow: hidden;
   > img {
     width: 100%;
+    height:100%;
+    object-fit:cover;
   }
 `;
 const UserProfileInfos = styled.div`
@@ -745,7 +775,7 @@ const UserProfileInfos = styled.div`
 `;
 const UserProfilePhotot = styled.div`
   position: absolute;
-  top: 2rem;
+  top: 3rem;
   z-index: 3;
   width: 80px;
   height: 80px;
@@ -755,6 +785,7 @@ const UserProfilePhotot = styled.div`
   display: grid;
   place-items: center;
   > img {
+    object-fit: cover;
     width: 80px;
     height: 80px;
     border-radius: 50%;

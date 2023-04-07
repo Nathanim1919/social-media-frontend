@@ -7,12 +7,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import Loading from "../components/Loading";
 
 export default function Login() {
 
   const [show, setShow] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsloading] = useState(false);
   const navigate = useNavigate()
 
   const generateError = (err) =>
@@ -21,10 +23,11 @@ export default function Login() {
     });
 
   const handleSubmit = async (e) => {
+    setIsloading(true);
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://social-app-ukv1.onrender.com/auth/login",
+        "http://localhost:5000/auth/login",
         {
           email,
           password,
@@ -39,77 +42,70 @@ export default function Login() {
           const { email, password } = data.errors;
             if (email) {
               generateError(email);
-               console.log(data);
             } else if (password) {
               generateError(password);
             } else {
               toast.error("An error occurred while Login in");
-               console.log(data);
             }
           } else{
-             console.log(data)
-             toast.success("User successfully Logged", {
-              onClose: () => {
-                setTimeout(() => {
-                  navigate(`/user/${data.user}`)
-                }, 3000);
-              },
-            });
+             navigate(`/user/${data.user}`);
           }
         }
     } catch (error) {
-      toast.error("An error occurred while Loging in");
+      // toast.error("An error occurred while Loging in");
+    } finally {
+      setIsloading(false); // Set loading state to false after the request has been processed
     }
   };
   return (
     <>
-    <Container
-      animate={{ opacity: show ? 1 : 0 }}
-      initial={{ opacity: 0 }}
-      transition={{ duration: 2 }}
-      exit={{ opacity: 0, y: -20, transition: { duration: 2 } }}
-    >
-      <Image>
-        <NavLink to={"/"}>
-          <BiArrowBack />
-        </NavLink>
-        <img src={signin} alt="" />
+      <Container
+        animate={{ opacity: show ? 1 : 0 }}
+        initial={{ opacity: 0 }}
+        transition={{ duration: 2 }}
+        exit={{ opacity: 0, y: -20, transition: { duration: 2 } }}
+      >
+        <Image>
+          <NavLink to={"/"}>
+            <BiArrowBack />
+          </NavLink>
+          <img src={signin} alt="" />
 
-        <IMagecontents>
-          <div>
-            <h1>Welcome Back</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Voluptatem sequi architecto nemo aut blanditiis dicta quis
-              adipisci maiores mollitia perferendis.
-            </p>
-          </div>
-        </IMagecontents>
-      </Image>
-      <Formcontent>
-        <form onSubmit={handleSubmit}>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            id="email"
-            placeholder="Email"
-          />
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            id="password"
-            placeholder="Password"
-          />
-          <button type="submit">Log in</button>
-        </form>
-        <p>
-          dont't you have account?{" "}
-          <NavLink to={"/register"}>create account</NavLink>
-        </p>
-      </Formcontent>
-    </Container>
-      <ToastContainer />
-      </>
+          <IMagecontents>
+            <div>
+              <h1>Welcome Back</h1>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptatem sequi architecto nemo aut blanditiis dicta quis
+                adipisci maiores mollitia perferendis.
+              </p>
+            </div>
+          </IMagecontents>
+        </Image>
+        <Formcontent>
+        {isLoading && <Loading />}
+          <form onSubmit={handleSubmit}>
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              id="email"
+              placeholder="Email"
+            />
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              id="password"
+              placeholder="Password"
+            />
+            <button type="submit">Log in</button>
+          </form>
+          <p>
+            dont't you have account?{" "}
+            <NavLink to={"/register"}>create account</NavLink>
+          </p>
+        </Formcontent>
+      </Container>
+    </>
   );
 }
 
