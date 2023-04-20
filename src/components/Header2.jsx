@@ -68,7 +68,7 @@ export default function (props) {
               </div>
               <div>
                 <h5>{props.user.name}</h5>
-                <h6>{props.user.profesion}</h6>
+                <h6>{props.user.profession}</h6>
               </div>
             </Userprofile>
           </Profile>
@@ -109,6 +109,7 @@ const Counter = styled.div`
   position: absolute;
   top: -1.5rem;
   right: 0.1rem;
+  
 
   p {
     display: grid;
@@ -122,10 +123,10 @@ const Setting = styled.div`
   box-shadow: 0 12px 23px rgba(0, 0, 0, 0.1);
   max-width: 130px;
   position: absolute;
-  right: 1rem;
+  right: 4rem;
   z-index: 3;
   background-color: white;
-  top: 5rem;
+  top: 4rem;
   padding: 0;
   border-radius: 5px;
 
@@ -141,9 +142,11 @@ const Setting = styled.div`
       display: flex;
       align-items: center;
       margin-top: 0;
-      justify-content: space-between;
+      justify-content: start;
+      gap: 1rem;
       border-bottom: 1px solid #eee;
       padding: 0 1rem;
+      font-size: .8rem;
     }
     > ul {
       display: flex;
@@ -216,21 +219,23 @@ const Userprofile = styled.div`
   }
 `;
 const Headere = styled.div`
-  border-bottom: 1px solid #fffdfd;
+  border-bottom: 1px solid #dddada;
   margin: 0;
+  position: relative;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.01);
-  padding: 0.4rem;
-
+  padding: 0.1rem 1rem;
+  background-color: white;
   nav div:nth-child(1) {
     font-size: 2rem;
   }
+
   nav,
   ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #346e75;
-
+    
     ul {
       gap: 3rem;
       a {
@@ -241,4 +246,12 @@ const Headere = styled.div`
       }
     }
   }
-`;
+  nav {
+    @media only screen and (max-width: 768px) {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
+  `;
+

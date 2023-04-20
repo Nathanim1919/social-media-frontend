@@ -92,7 +92,7 @@ export default function PostDetail(props) {
                     <CommentBody>
                       <User>
                         <h4>{comment.user.name}</h4>
-                        <h5>{comment.user.profesion}</h5>
+                        <h5>{comment.user.profession}</h5>
                       </User>
                       <Body>
                         <p>{comment.body}</p>
@@ -270,6 +270,8 @@ const CreaterInfo = styled.div`
 
     > img {
       width: 100%;
+      height:100%;
+      object-fit: cover;
     }
   }
   > div:nth-child(2) {

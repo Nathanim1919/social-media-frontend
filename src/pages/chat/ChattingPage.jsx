@@ -4,14 +4,30 @@ import io from "socket.io-client";
 import styled from "styled-components";
 import SideBar from "./SideBar";
 import StartChatting from "./StartChatting";
+import axios from "axios";
 
 const ENDPOINT = "http://localhost:5000";
 
 export default function ChattingPage(){
+  
   const { id } = useParams();
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [socket, setSocket] = useState(null);
+
+  // get all users from the database
+  useEffect(() => {
+    const getAllUsers = async () => {
+      try {
+        const alluser = await axios.get(`http://localhost:5000/user`);
+        setUsers(alluser.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllUsers();
+  }, []);
+
 
   useEffect(() => {
     const newSocket = io(ENDPOINT);

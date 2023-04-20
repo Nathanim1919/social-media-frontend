@@ -41,6 +41,9 @@ export default App;
 
 
 const Container = styled.div`
+    @media only screen and(max-width: 768px) {
+      overflow: scroll;
+    }
     display: grid;
     place-items: center;
     margin: 0;
@@ -48,9 +51,10 @@ const Container = styled.div`
     padding: 0;
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
-    max-height: 97vh;
+    max-height: 98vh;
     background-color: #fff;
-
+    position: relative;
+    background-color: #eee;
     >*{
       width: 100%;
     }

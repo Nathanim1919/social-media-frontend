@@ -28,7 +28,6 @@ export default function AddPost(props) {
           withCredentials: true,
         }
       );
-      console.log(post);
       props.setIsBox(false);
     } catch (error) {
       console.log(error);

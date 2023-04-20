@@ -117,7 +117,7 @@ const Container = styled(motion.div)`
   gap: 2rem;
   height: 97vh;
   padding: 0rem;
-
+  
   > * {
     width: 100%;
     height: 100%;
@@ -162,6 +162,7 @@ const Container = styled(motion.div)`
 const Image = styled.div`
   background-color: #19a8a8;
   position: relative;
+  
   > a {
     position: absolute;
     top: 1rem;

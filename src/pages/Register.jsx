@@ -14,7 +14,7 @@ export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [profesion, setProfesion] = useState("");
+  const [profession, setProfesion] = useState("");
   const [profile, setProfile] = useState("");
 
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function Login() {
           name,
           password,
           email,
-          profesion,
+          profession,
           profilepic,
         },
         {
@@ -46,7 +46,7 @@ export default function Login() {
 
       if (data) {
         if (data.errors) {
-          const { name, email, password, profesion, profilepic } = data.errors;
+          const { name, email, password, profession, profilepic } = data.errors;
 
           if (name) {
             generateError(name);
@@ -56,8 +56,8 @@ export default function Login() {
             generateError(password);
           } else if (profilepic) {
             generateError(profilepic);
-          } else if (profesion) {
-            generateError(profesion);
+          } else if (profession) {
+            generateError(profession);
           } else {
             toast.error("An error occured while creating user!");
           }
@@ -171,6 +171,10 @@ const Container = styled(motion.div)`
     gap: 1rem;
     border-radius: 10px;
     background-color: #fff;
+    @media only screen and (max-width: 768px) {
+      background-color: transparent;
+      
+    } 
 
     label {
       width: 100px;
@@ -190,6 +194,7 @@ const Container = styled(motion.div)`
       border-left: 7px solid #3cb8e9;
       border-radius: 5px;
       outline: none;
+      color: #ffffff;
     }
 
     button {
@@ -234,6 +239,12 @@ const Formcontent = styled.div`
   place-items: start;
   padding: 0;
   height: 60%;
+  @media only screen and (max-width: 768px) {
+   position: absolute;
+   width: 100vw;
+   place-items: center;
+   background-color: transparent;
+  }
   > * {
     width: 90%;
   }

@@ -65,13 +65,16 @@ export default function ProfilePage() {
           <Followers>
             <Links>
               <NavLink
+                className={displayFollowers ? "active" : "notactive"}
                 onClick={() => setDisplayFollowers(true)}
-                activeClassName="activeLink"
               >
-                Followers
+                Followers ({user.followers && user.followers.length})
               </NavLink>
-              <NavLink onClick={() => setDisplayFollowers(false)}>
-                Following
+              <NavLink
+                className={!displayFollowers ? "active" : "notactive"}
+                onClick={() => setDisplayFollowers(false)}
+              >
+                Following ({user.following && user.following.length})
               </NavLink>
             </Links>
             <Friends>
@@ -148,14 +151,21 @@ const Links = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0.4rem 1rem;
-  background-color: #82abf7;
   > * {
     text-decoration: none;
     color: #fffefe;
-
-    .activeLink {
-      background-color: red;
-    }
+  }
+  .active {
+    background-color: #129fd6;
+    padding: 0.3rem 0.5rem;
+    color: white;
+    border-radius: 5px;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+  }
+  .notactive {
+    color: blue;
+    background-color: transparent;
+    text-shadow: 0 0px 0px rgba(0, 0, 0, 0.4);
   }
 `;
 const UserPosts = styled.div`

@@ -61,7 +61,7 @@ const Header = styled.div`
   border-radius: 10px;
   justify-content: space-between;
   align-items: center;
-  background-color: #fefeff0;
+  background-color: #ffff;
   padding: 0 1rem;
   color: #313030;
   margin-bottom: 1rem;
@@ -97,13 +97,16 @@ const Notification = styled.div`
 `;
 
 const NotificationBoard = styled.div`
-  background-color: #fdfcfc75;
+  background-color: #fdfcfcd8;
   width: 40vw;
   padding: 0.5rem;
   border-radius: 10px;
   height: 85vh;
   box-shadow: 0 7px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(13px);
+  @media only screen and (max-width: 768px) {
+    width: 95vw;
+  }
 `;
 const Backdrop = styled.div`
   display: grid;
@@ -114,6 +117,6 @@ const Backdrop = styled.div`
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(80, 76, 76, 0.096);
+  background-color: rgba(80, 76, 76, 0.562);
   backdrop-filter: blur(3px);
 `;
