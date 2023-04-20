@@ -51,7 +51,7 @@ const Container = styled.div`
     padding: 0;
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
-    max-height: 98vh;
+    max-height: 97vh;
     background-color: #fff;
     position: relative;
     background-color: #eee;

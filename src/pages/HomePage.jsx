@@ -567,7 +567,7 @@ const Comment = styled.div`
   }
 `;
 const AllUser = styled.div`
-  height: 77vh;
+  height: 87vh;
   overflow-y: auto;
   background-color: #eee;
 
@@ -767,13 +767,14 @@ const MobileIcon = styled.div`
 `;
 const InnerWel = styled.div`
   background-color: #ffffff;
-  width: 70%;
+  width: 90%;
   display: grid;
   place-items: center;
   grid-template-columns: 50% 50%;
-  margin-bottom: 1rem;
-  padding: 0.1rem 1rem;
+  padding: .5rem 1rem;
+  border-radius: 40px;
   font-size: 0.79rem;
+  margin: .6rem;
   @media only screen and (max-width: 768px) {
     font-size: 0.5rem;
     display: none;
@@ -809,16 +810,18 @@ const InnerWel = styled.div`
 `;
 
 const Welcome = styled.div`
- background-color: #eee;
- display: grid;
- align-items: center;
- place-items: start;
+    position: relative;
+    width: 77%;
+    background-color: #f3efef;
+    display: grid;
+    place-items: center;
 `;
 
 const Timeline = styled.div`
-  display: grid;
-  background-color: #ffffff;
-  grid-template-columns: 20% 50% 30%;
+    margin: 0;
+    display: grid;
+    background-color: #ffffff;
+    grid-template-columns: 20% 50% 30%;
 
   @media only screen and (max-width: 768px) {
     grid-template-columns: 1fr;
