@@ -27,7 +27,6 @@ function App() {
         <Route Route path = "/" element = {< Parentpage/>} >
             <Route Route path = "user/:id" element = {< HomePage />} />
             <Route path = "user/:id/posts/:post_id" element = {  < PostDetail/>}/>
-            {/* <Route path = "user/:id/friends" element = {  < AllFriends/>}/> */}
             <Route path = "user/:id/friends/:f_id" element = {  < FriendProfile/>}/>
             <Route path = "user/:id/addpost" element = {  < AddNewPost/>}/>
             <Route path = "user/:id/profile" element = {  < ProfilePage/>}/>

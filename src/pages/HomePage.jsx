@@ -1,10 +1,8 @@
-import react from "react";
 import axios from "axios";
 import { useParams, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddPost from "../components/AddPost";
-import { BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillLike, AiFillHome } from "react-icons/ai";
 import { FaRegCommentDots, FaUserFriends } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
@@ -12,6 +10,7 @@ import { BiMessageRoundedDots } from "react-icons/bi";
 import PostDetail from "./PostDetail";
 import Loading from "../components/Loading";
 import { GrLinkNext } from "react-icons/gr";
+import Story from "../components/Story";
 
 export default function () {
   const [user, setUser] = useState({});
@@ -23,7 +22,7 @@ export default function () {
   const [commentBody, setCommentBody] = useState("");
   const [openComments, setOpenComments] = useState(false);
   const [postDetail, setPostDetail] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [displayUser, setDisplayUsers] = useState(false);
 
@@ -221,22 +220,7 @@ export default function () {
           </div>
           <div>
             <div>
-              <Stories>
-                <AddStory>
-                  <img src={user.profile} />
-                  <div>
-                    <form>
-                      <label for="pic">+</label>
-                      <input id="pic" type="file" hidden />
-                    </form>
-                  </div>
-                </AddStory>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </Stories>
+              <Story user={user}/>
               <Welcome>
                 <InnerWel>
                   <div>
@@ -395,38 +379,6 @@ export default function () {
   );
 }
 
-const AddStory = styled.div`
-  position: relative;
-  overflow: hidden;
-
-  > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  > div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    > form {
-      display: grid;
-      place-items: center;
-      border: 3px solid #fff;
-      background-color: #dddddd8f;
-      backdrop-filter: blur(3px);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      cursor: pointer;
-      label {
-        color: white;
-        font-size: 2rem;
-      }
-    }
-  }
-`;
 const StartMessaging = styled.div`
   background: linear-gradient(45deg, #2afadf, #4c83ff);
 
@@ -492,23 +444,6 @@ const StartMessaging = styled.div`
   }
 `;
 
-const Stories = styled.div`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex: 1;
-  gap: 0.51rem;
-  margin-bottom: 1rem;
-  background-color: #fff;
-  padding: 0.5rem;
-  > div {
-    flex: 1;
-    background-color: #eee;
-    width: 130px;
-    height: 180px;
-    border-radius: 20px;
-  }
-`;
 
 const Comments = styled.div`
   display: grid;
@@ -811,10 +746,11 @@ const InnerWel = styled.div`
 
 const Welcome = styled.div`
     position: relative;
-    width: 77%;
+    width: 100%;
     background-color: #f3efef;
     display: grid;
     place-items: center;
+    font-size: .7rem;
 `;
 
 const Timeline = styled.div`
@@ -850,6 +786,7 @@ const Timeline = styled.div`
     max-height: 90vh;
     overflow-y: auto;
     margin-right: 1rem;
+    overflow-x: hidden;
   }
   > div:nth-child(3) {
     background-color: #ffffff;
