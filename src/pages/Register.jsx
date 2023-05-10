@@ -187,6 +187,7 @@ const Container = styled(motion.div)`
     }
 
     input {
+      position: relative;
       width: 100%;
       padding: 1rem;
       background-color: #c9c3c392;
@@ -234,11 +235,16 @@ const Image = styled.div`
 `;
 
 const Formcontent = styled.div`
-  margin-top: 3rem;
+  margin-top: 0rem;
   display: grid;
-  place-items: start;
+  place-items: center;
   padding: 0;
-  height: 60%;
+  place-self: center;
+  background-color: #fff;
+  height: 90%;
+  width: 65%;
+  position: relative;
+  box-shadow: 0 10px 10px #eee;
   @media only screen and (max-width: 768px) {
    position: absolute;
    width: 100vw;

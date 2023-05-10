@@ -11,6 +11,7 @@ import PostDetail from "./PostDetail";
 import Loading from "../components/Loading";
 import { GrLinkNext } from "react-icons/gr";
 import Story from "../components/Story";
+import ShowStories from "../components/showStories";
 
 export default function () {
   const [user, setUser] = useState({});
@@ -220,13 +221,11 @@ export default function () {
           </div>
           <div>
             <div>
-              <Story user={user}/>
+              <Story user={user} />
               <Welcome>
                 <InnerWel>
                   <div>
-                    <h2>
-                      welcome back, <span>{user.name}</span>
-                    </h2>
+                    <h2>welcome back</h2>
                   </div>
                   <div>
                     <NavLink onClick={() => setIsBox(true)}>Post</NavLink>
@@ -359,7 +358,7 @@ export default function () {
                             </UserProfile>
                             <Info>
                               <h5>{u.name}</h5>
-                              <p>{u.profession}</p>
+                              <p>{u.profession.slice(0, 20)}</p>
                             </Info>
                           </div>
                           <NavLink onClick={() => followUser(u)}>
@@ -443,7 +442,6 @@ const StartMessaging = styled.div`
     }
   }
 `;
-
 
 const Comments = styled.div`
   display: grid;
@@ -584,9 +582,9 @@ const UserProfile = styled.div`
 const AllPosts = styled.div`
   background-color: #ffffff;
   padding: 1rem 3rem 3rem 3rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
+  place-items: center;
   > a {
     text-decoration: none;
     color: #333;
@@ -706,13 +704,14 @@ const InnerWel = styled.div`
   display: grid;
   place-items: center;
   grid-template-columns: 50% 50%;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 40px;
   font-size: 0.79rem;
-  margin: .6rem;
+  margin: 0.6rem;
   @media only screen and (max-width: 768px) {
     font-size: 0.5rem;
     display: none;
+    width: 100%;
   }
 
   > div:nth-child(1) {
@@ -745,19 +744,19 @@ const InnerWel = styled.div`
 `;
 
 const Welcome = styled.div`
-    position: relative;
-    width: 100%;
-    background-color: #f3efef;
-    display: grid;
-    place-items: center;
-    font-size: .7rem;
+  position: relative;
+  width: 100%;
+  background-color: #f3efef;
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
 `;
 
 const Timeline = styled.div`
-    margin: 0;
-    display: grid;
-    background-color: #ffffff;
-    grid-template-columns: 20% 50% 30%;
+  margin: 0;
+  display: grid;
+  background-color: #ffffff;
+  grid-template-columns: 20% 50% 30%;
 
   @media only screen and (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -785,8 +784,8 @@ const Timeline = styled.div`
     place-items: center;
     max-height: 90vh;
     overflow-y: auto;
-    margin-right: 1rem;
     overflow-x: hidden;
+    width: 100%;
   }
   > div:nth-child(3) {
     background-color: #ffffff;

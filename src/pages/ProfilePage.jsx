@@ -169,9 +169,7 @@ const Links = styled.div`
   }
 `;
 const UserPosts = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
   flex-wrap: wrap;
   gap: 0.1rem;
   height: 70vh;
@@ -280,7 +278,7 @@ const ProfileImage = styled.div`
   border: 5px solid #ffffff;
   position: absolute;
   z-index: 2;
-  top: 7rem;
+  top: 12rem;
 
   > img {
     width: 150px;
@@ -324,7 +322,7 @@ const CoverImage = styled.div`
   background-color: #eee;
   width: 100%;
   overflow: hidden;
-  height: 100px;
+  height: 200px;
 
   > img {
     width: 100%;
@@ -336,7 +334,7 @@ const CoverImage = styled.div`
 const Infos = styled.div`
   padding: 1rem;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 60% 40%;
 `;
 const Friends = styled.div`
   background-color: #fcfafa;
@@ -351,6 +349,4 @@ const Followers = styled.div`
   background-color: #fcf9f9;
   padding: 1rem;
 `;
-const Following = styled.div`
-  background-color: red;
-`;
+

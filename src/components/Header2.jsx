@@ -223,7 +223,7 @@ const Headere = styled.div`
   margin: 0;
   position: relative;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.01);
-  padding: 0.1rem 1rem;
+  padding: 0.51rem 1rem;
   background-color: white;
   nav div:nth-child(1) {
     font-size: 2rem;

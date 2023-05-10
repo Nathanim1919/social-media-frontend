@@ -4,11 +4,14 @@ import styled from "styled-components";
 import { AiOutlinePicture } from "react-icons/ai";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import { NavLink } from "react-router-dom";
+import ShowStories from "./showStories";
 
 export default function Story(props) {
   const [stories, setStories] = useState([]);
   const [isStoryAddBoxOpen, setOpenBox] = useState(false);
   const [image, setImageurl] = useState("");
+  const [displayStorie, setdisplayStories] = useState(false);
 
   const toBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -31,6 +34,7 @@ export default function Story(props) {
     );
     setOpenBox(false);
   };
+
   useEffect(() => {
     const getStories = async () => {
       const stories = await axios.get(
@@ -40,10 +44,13 @@ export default function Story(props) {
       setStories(story);
     };
     getStories();
-  }, [image]);
+  }, [isStoryAddBoxOpen]);
 
   return (
     <>
+      {displayStorie && (
+        <ShowStories setdisplayStories={setdisplayStories} stories={stories} />
+      )}
       {isStoryAddBoxOpen && (
         <>
           <Backdrop></Backdrop>
@@ -64,31 +71,42 @@ export default function Story(props) {
             </form>
             <Buttons>
               <button onClick={() => setOpenBox(false)}>cancle</button>
-              <button onClick={() => createStory()}>post</button>
+              <button
+                onClick={() => {
+                  createStory();
+                  setOpenBox(false);
+                }}
+              >
+                post
+              </button>
             </Buttons>
           </PostStory>
         </>
       )}
-      <Stories>
-        <AddStory>
-          <img src={props.user.profile} />
-          <Circle>
-            <button onClick={() => setOpenBox(true)}>+</button>
-          </Circle>
-        </AddStory>
 
-        {stories.map((story) => (
-          <div>
-            <img src={story.image} alt="" />
-            <UserInfo>
-              <Info>
-                <h6>{story.user.name}</h6>
-                <p>{story.user.profession}</p>
-              </Info>
-            </UserInfo>
-          </div>
-        ))}
-        {/* <div></div> */}
+      <Stories>
+        <div>
+          <AddStory>
+            <img src={props.user.profile} />
+            <Circle>
+              <button onClick={() => setOpenBox(true)}>+</button>
+            </Circle>
+          </AddStory>
+
+          {stories.map((story) => (
+            <div>
+              <NavLink onClick={() => setdisplayStories(true)}>
+                <img src={story.image} alt="" />
+                <UserInfo>
+                  <Info>
+                    <h6>{story.user.name}</h6>
+                    <p>{story.user.profession}</p>
+                  </Info>
+                </UserInfo>
+              </NavLink>
+            </div>
+          ))}
+        </div>
       </Stories>
     </>
   );
@@ -189,33 +207,53 @@ const Buttons = styled.div`
 `;
 
 const Stories = styled.div`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex: 1;
-  width: 650px;
-  gap: 0.51rem;
-  margin-bottom: 1rem;
-  background-color: #fff;
-  padding: 0.5rem;
-  overflow-x: auto;
+  display: grid;
+  place-items: center;
   > div {
-    flex: 1;
-    background-color: #eee;
-    width: 130px;
-    height: 180px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.51rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    padding: 0.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 90%;
 
-    > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    /* width */
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+
+    > div {
+      flex: 0 0 auto;
+      background-color: #eee;
+      width: 150px;
+      height: 230px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 `;
+
 const AddStory = styled.div`
   position: relative;
   overflow: hidden;

@@ -42,6 +42,7 @@ export default function Welcome() {
 const Container = styled.div`
   padding: 0;
   margin: 0;
+  background-color: #fff;
 `;
 
 const Hero = styled(motion.div)`

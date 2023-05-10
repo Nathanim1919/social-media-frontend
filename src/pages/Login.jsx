@@ -118,6 +118,7 @@ const Container = styled(motion.div)`
   height: 97vh;
   padding: 0rem;
   
+  
   > * {
     width: 100%;
     height: 100%;
@@ -184,7 +185,10 @@ const Formcontent = styled.div`
   display: grid;
   place-items: center;
   padding: 0;
-  height: 60%;
+  height: 50%;
+  width: 90%;
+  background-color: #ffffff;
+  box-shadow: 0 10px 10px #000000a;
   > * {
     width: 90%;
   }

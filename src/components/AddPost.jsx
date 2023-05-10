@@ -76,9 +76,9 @@ export default function AddPost(props) {
 const Container = styled.div`
   width: 50%;
   position: absolute;
-  background-color: #ffffff;
+  background-color: #fcf8f8;
   color: #181717;
-  text-shadow: 0 10px 10px rgba(0, 0, 0, 0.41);
+  text-shadow: 0 10px 10px rgba(121, 117, 117, 0.014);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -106,28 +106,29 @@ const Container = styled.div`
 
     > textArea,
     input {
-      border: 1px solid #e4dfdf;
+      border: 1px solid #eee8e8;
       resize: none;
       border-radius: 6px;
       padding: 0.6rem 1.3rem;
       font-family: inherit;
       outline: none;
-      background-color: #837d7d2f;
+      background-color: #d8cece2e;
       backdrop-filter: blur(1px);
     }
 
     > button {
-      padding: 0.71rem;
-      background-color: #b9ca98;
+      padding:0.3rem 0.71rem;
+      background-color: #5ac0f0;
       border: none;
       box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
+      border-radius: 5px;
       color: white;
+      width: 20%;
       font-size: 1.3rem;
       cursor: pointer;
 
       &:hover {
-        background-color: #92a36e;
+        background-color: #1689be;
       }
     }
   }
@@ -144,4 +145,5 @@ const Backdrop = styled.div`
   display: grid;
   place-items: center;
   font-family: inherit;
+  z-index: 10;
 `;
