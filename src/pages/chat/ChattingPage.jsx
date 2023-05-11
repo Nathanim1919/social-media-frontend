@@ -1,26 +1,47 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import io from "socket.io-client";
+import React, { useEffect, useState } from "react";
+import Sidebar from "./sidebar";
 import styled from "styled-components";
-import SideBar from "./SideBar";
-import StartChatting from "./StartChatting";
 import axios from "axios";
+import { FiSend } from "react-icons/fi";
+import Conversations from "./conversations";
+import { useParams } from "react-router-dom";
 
-const ENDPOINT = "http://localhost:5000";
+export default function ChattingPage() {
+  const [activeUser, setActiveUser] = useState({});
+  const [users, setAllUsers] = useState([]);
+  const [message, setmessage] = useState("");
+  const [conversation, setConversation] = useState({});
 
-export default function ChattingPage(){
-  
   const { id } = useParams();
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [socket, setSocket] = useState(null);
+  const activeUserId = activeUser._id;
+
+  // get specific conversation
+  useEffect(() => {
+    const getConversation = async () => {
+      try {
+        const conversation = await axios.get(
+          `http://localhost:5000/user/${id}/startchat/conversation?activeUserId=${activeUserId}`
+          //  {
+          //    activeUserId,
+          //  }
+        );
+        console.log(conversation.data);
+        setConversation(conversation.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getConversation();
+  }, [activeUserId]);
 
   // get all users from the database
   useEffect(() => {
     const getAllUsers = async () => {
       try {
         const alluser = await axios.get(`http://localhost:5000/user`);
-        setUsers(alluser.data);
+        console.log(alluser);
+        setAllUsers(alluser.data);
+        console.log("hi");
       } catch (error) {
         console.log(error);
       }
@@ -28,50 +49,194 @@ export default function ChattingPage(){
     getAllUsers();
   }, []);
 
-
-  useEffect(() => {
-    const newSocket = io(ENDPOINT);
-    setSocket(newSocket);
-    return () => newSocket.close();
-  }, []);
-
-  useEffect(() => {
-    if (socket) {
-      socket.emit("get_users", id);
-
-      socket.on("users", (users) => {
-        setUsers(users);
-      });
+  async function sendMessage() {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/user/${id}/startchat/sent`,
+        {
+          message,
+          id,
+          activeUserId,
+        }
+      );
+      console.log("Message sent successfully!");
+      return response.data;
+    } catch (error) {
+      console.error("Error sending message: ", error);
+      throw error;
     }
-  }, [socket, id]);
-
-  const handleUserClick = (user) => {
-    setSelectedUser(user);
-  };
+  }
 
   return (
     <Container>
-      <SideBar users={users} onUserClick={handleUserClick} />
-      {selectedUser ? (
-        <StartChatting selectedUser={selectedUser} />
-      ) : (
-        <Placeholder>
-          <p>Select a user to start chatting</p>
-        </Placeholder>
+      <Sidebar
+        setActiveUser={setActiveUser}
+        users={users}
+        activeUser={activeUser}
+      />
+      <Messagecontainer>
+        {activeUser.name ? (
+          <Activeuser>
+            <div>
+              <img src={activeUser.profile} alt="" />
+            </div>
+            <div>
+              <p>{activeUser.name}</p>
+              <h6>last seen 2 minutes ago</h6>
+            </div>
+          </Activeuser>
+        ) : (
+          ""
+        )}
+        <Conversation>
+          {!activeUser.name ? (
+            "Select user to start conversation"
+          ) : (
+            <Conversations
+              conversation={conversation}
+              activeUserId={activeUserId}
+            />
+          )}
+        </Conversation>
+        {activeUser.name ? (
+          <Sendmessage>
+            <input
+              onChange={(e) => setmessage(e.target.value)}
+              type="text"
+              placeholder="send message..."
+              value={message}
+            />
+            <button
+              onClick={() => {
+                sendMessage();
+                setmessage("");
+              }}
+            >
+              <FiSend />
+            </button>
+          </Sendmessage>
+        ) : (
+          ""
+        )}
+      </Messagecontainer>
+
+      {activeUser.name && (
+        <Userinfo>
+          <Userprofile>
+            <div>
+              <img src={activeUser.profile} alt="" />
+            </div>
+            <div>
+              <h4>{activeUser.name}</h4>
+              <p>last seen 2 mins ago</p>
+            </div>
+          </Userprofile>
+        </Userinfo>
       )}
     </Container>
   );
-};
+}
 
-// styled components
-
-const Placeholder = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
+const Userinfo = styled.div`
+  background-color: #ffffff;
+  border-left: 1px solid #ddd;
 `;
+
+const Userprofile = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
+  > div:nth-child(1) {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  >div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+
+    >*{
+      margin: .2rem;
+    }
+  }
+`;
+
+const Sendmessage = styled.div`
+  display: grid;
+  grid-template-columns: 0.81fr 0.1fr;
+  align-items: center;
+  gap: 1rem;
+  background-color: #fff;
+
+  button {
+    background-color: #63abfd;
+    display: grid;
+    place-items: center;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #3278c9;
+    }
+  }
+
+  > * {
+    outline: none;
+    padding: 0.3rem;
+    width: 100%;
+    font-size: 1.2rem;
+    border: none;
+  }
+`;
+
+const Conversation = styled.div``;
+const Messagecontainer = styled.div`
+  display: grid;
+  grid-template-rows: 0.13fr 1fr 0.14fr;
+  width: 100%;
+  height: 89vh;
+`;
+
+const Activeuser = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  background-color: #fff;
+  padding: 0.4rem 1rem;
+
+  > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    > * {
+      margin: 0;
+    }
+  }
+  > div:nth-child(1) {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    > img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;
+
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 30% 70%;
+  height: 100%;
+  grid-template-columns: 0.2fr 0.5fr 0.3fr;
 `;

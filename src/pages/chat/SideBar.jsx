@@ -1,117 +1,81 @@
-import React, { useState } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
 
-export default function SideBar(props) {
-  const { id } = useParams();
+export default function Sidebar(props) {
+
+
+  const {id} = useParams();
+
   return (
-    <SideBars>
-      <NavLink to={`/user/${id}`}>
-        <BiArrowBack />
-      </NavLink>
+    <Container>
       <div>
-        <input type="text" placeholder="Search..." />
+        <input type="text" placeholder="Search...." />
       </div>
 
-      <UserContainer>
-        {props.users
-          ? props.users.map((user) => (
-              <NavLink onClick={() => props.setSelectedUser(user)}>
-                <UserProfile>
-                  <div>
-                    <img src={user.profile} alt="" />
-                  </div>
-                  <div>
-                    <h5>{user.name}</h5>
-                  </div>
-                </UserProfile>
-              </NavLink>
-            ))
-          : "Loading..."}
-      </UserContainer>
-    </SideBars>
+      <Users>
+        {props.users.map((user) => (
+          id != user._id &&
+          <UserInfo key={user._id} onClick={() => props.setActiveUser(user)} className={`${props.activeUser._id == user._id?"active":''}`}>
+            <div>
+              <img src={user.profile} alt="" />
+            </div>
+            <p>{user.name}</p>
+          </UserInfo>
+        ))}
+      </Users>
+    </Container>
   );
 }
 
-// styled styles for the above component
-const BackLink = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  color: #000;
-  font-size: 1.5rem;
-  margin-right: 1rem;
-  text-decoration: none;
-  &:hover {
-    color: #555;
-  }
-`;
-const SideBars = styled.div`
-  background-color: #f2f8f7;
-  width: 100%;
-  height: 100vh;
 
-  > a:first-child {
-    margin: 1rem;
-    font-size: 1.5rem;
-  }
 
-  > div:nth-child(2) {
-    width: 90%;
-    margin-left: 0.21rem;
-    padding: 0.5rem;
-    border-bottom: 1px solid #fff;
-    > input {
-      padding: 0.7rem;
-      width: 100%;
-      background-color: #eee;
-      border: none;
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    position: relative;
+  
+    input{
+      width: 90%;
+      border: 1px solid #eee;
       outline: none;
+      padding: .5rem;
+      margin: .51rem;
     }
+`
+
+const Users = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    >*{
+        margin: 0;
+    }
+`
+
+const UserInfo = styled.div`
+  &.active{
+    background-color: #1d1c1c;
+    color: #fff;
   }
-`;
-
-const UserContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.41rem;
-  width: 91%;
-  padding: 1rem;
-`;
-
-const UserProfile = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background-color: white;
-  padding: 0.3rem;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  padding: 0.03rem 0.5rem;
+  cursor: pointer;
 
-  > div:nth-child(1) {
+
+  > div {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
 
     > img {
+      object-fit: cover;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-    }
-  }
-  > div:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    > * {
-      margin: 0;
-    }
-    > h5 {
-      font-size: 0.79rem;
-    }
-    > p {
-      font-size: 0.75rem;
-      color: #5e6061;
     }
   }
 `;

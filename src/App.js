@@ -14,7 +14,7 @@ import Register from './pages/Register';
 import Welcome from './pages/Welcome';
 import styled from 'styled-components';
 import Parentpage from './pages/Parentpage';
-import ChattingPage from './pages/chat/ChattingPage';
+import ChattingPage from './pages/chat/chattingPage';
 
 function App() {
   return ( 
@@ -23,9 +23,9 @@ function App() {
         <Route path = "/" element = {  < Welcome/>}/>
         <Route path = "/login" element = {  < Login/>}/>
         <Route path = "/register" element = {  < Register/>}/>
-        <Route path = "user/:id/startchat" element ={<ChattingPage/>}/>
         <Route Route path = "/" element = {< Parentpage/>} >
             <Route Route path = "user/:id" element = {< HomePage />} />
+            <Route Route path = "/user/:id/startchat" element = {< ChattingPage />} />
             <Route path = "user/:id/posts/:post_id" element = {  < PostDetail/>}/>
             <Route path = "user/:id/friends/:f_id" element = {  < FriendProfile/>}/>
             <Route path = "user/:id/addpost" element = {  < AddNewPost/>}/>
