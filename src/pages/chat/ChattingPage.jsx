@@ -21,9 +21,6 @@ export default function ChattingPage() {
       try {
         const conversation = await axios.get(
           `http://localhost:5000/user/${id}/startchat/conversation?activeUserId=${activeUserId}`
-          //  {
-          //    activeUserId,
-          //  }
         );
         console.log(conversation.data);
         setConversation(conversation.data);
@@ -94,7 +91,7 @@ export default function ChattingPage() {
           ) : (
             <Conversations
               conversation={conversation}
-              activeUserId={activeUserId}
+              activeUser={activeUser}
             />
           )}
         </Conversation>
@@ -103,7 +100,7 @@ export default function ChattingPage() {
             <input
               onChange={(e) => setmessage(e.target.value)}
               type="text"
-              placeholder="send message..."
+              placeholder="write message..."
               value={message}
             />
             <button
@@ -172,9 +169,15 @@ const Userprofile = styled.div`
 
 const Sendmessage = styled.div`
   display: grid;
+  position: absolute;
   grid-template-columns: 0.81fr 0.1fr;
   align-items: center;
   gap: 1rem;
+  bottom: 5rem;
+  width:100%;
+  left:0;
+  right:0;
+  padding:.51rem;
   background-color: #fff;
 
   button {
@@ -198,12 +201,19 @@ const Sendmessage = styled.div`
   }
 `;
 
-const Conversation = styled.div``;
+const Conversation = styled.div`
+  padding-bottom: 3rem;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+`;
 const Messagecontainer = styled.div`
   display: grid;
   grid-template-rows: 0.13fr 1fr 0.14fr;
   width: 100%;
-  height: 89vh;
+  height: 100vh;
+  position:relative;
+  background-color:#f7f5f5;
 `;
 
 const Activeuser = styled.div`
