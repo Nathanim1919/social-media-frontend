@@ -5,12 +5,18 @@ import axios from "axios";
 import { FiSend } from "react-icons/fi";
 import Conversations from "./conversations";
 import { useParams } from "react-router-dom";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { BiBlock } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineMessage } from "react-icons/ai";
+import { SlUserFollowing } from "react-icons/sl";
 
 export default function ChattingPage() {
   const [activeUser, setActiveUser] = useState({});
   const [users, setAllUsers] = useState([]);
   const [message, setmessage] = useState("");
   const [conversation, setConversation] = useState({});
+  const [options, setOptions] = useState(false);
 
   const { id } = useParams();
   const activeUserId = activeUser._id;
@@ -75,24 +81,53 @@ export default function ChattingPage() {
         {activeUser.name ? (
           <Activeuser>
             <div>
-              <img src={activeUser.profile} alt="" />
+              <div>
+                <img src={activeUser.profile} alt="" />
+              </div>
+              <div>
+                <p>{activeUser.name}</p>
+                <h6>last seen 2 minutes ago</h6>
+              </div>
             </div>
-            <div>
-              <p>{activeUser.name}</p>
-              <h6>last seen 2 minutes ago</h6>
-            </div>
+
+            <Icon>
+              <BsThreeDotsVertical onClick={() => setOptions(!options)} />
+
+              <Options
+                style={{
+                  display: options ? "grid" : "none",
+                }}
+              >
+                <li>
+                  <CgProfile />
+                  View profile
+                </li>
+                <li>
+                  <BiBlock />
+                  Block user
+                </li>
+                <li>
+                  <AiOutlineMessage />
+                  Go to first message
+                </li>
+                <li>
+                  <SlUserFollowing />
+                  Follow user
+                </li>
+              </Options>
+            </Icon>
           </Activeuser>
         ) : (
           ""
         )}
         <Conversation>
-          {!activeUser.name ? (
-            "Select user to start conversation"
-          ) : (
+          {activeUser.name ? (
             <Conversations
               conversation={conversation}
               activeUser={activeUser}
             />
+          ) : (
+            <span className="nochat">Select user to start conversation</span>
           )}
         </Conversation>
         {activeUser.name ? (
@@ -134,6 +169,44 @@ export default function ChattingPage() {
   );
 }
 
+const Options = styled.div`
+  position: absolute;
+  top: 5%;
+  right: 8%;
+  padding: 0;
+  background-color: #fff;
+  box-shadow: 0 7px 15px #0000001f;
+  border-radius: 10px;
+  z-index: 3;
+  transition: all 0.3s ease-in-out;
+
+  > li {
+    cursor: pointer;
+    list-style-type: none;
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.41rem;
+    font-size: 0.9rem;
+    color: #000000;
+    font-weight: lighter;
+
+    &:hover {
+      background-color: #e9e4e4;
+    }
+  }
+`;
+
+const Icon = styled.div`
+  width: 30px;
+  cursor: pointer;
+  height: 30px;
+  background-color: #eee;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+`;
+
 const Userinfo = styled.div`
   background-color: #ffffff;
   border-left: 1px solid #ddd;
@@ -157,12 +230,12 @@ const Userprofile = styled.div`
     }
   }
 
-  >div:nth-child(2){
+  > div:nth-child(2) {
     display: flex;
     flex-direction: column;
 
-    >*{
-      margin: .2rem;
+    > * {
+      margin: 0.2rem;
     }
   }
 `;
@@ -174,10 +247,10 @@ const Sendmessage = styled.div`
   align-items: center;
   gap: 1rem;
   bottom: 5rem;
-  width:100%;
-  left:0;
-  right:0;
-  padding:.51rem;
+  width: 100%;
+  left: 0;
+  right: 0;
+  padding: 0.51rem;
   background-color: #fff;
 
   button {
@@ -206,41 +279,62 @@ const Conversation = styled.div`
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
+
+  .nochat {
+    position: absolute;
+    top: 50%;
+    padding: 0.4rem 1rem;
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 10px 10px #eee;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 const Messagecontainer = styled.div`
   display: grid;
   grid-template-rows: 0.13fr 1fr 0.14fr;
   width: 100%;
   height: 100vh;
-  position:relative;
-  background-color:#f7f5f5;
+  position: relative;
+  background-color: #f7f5f5;
 `;
 
 const Activeuser = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
   width: 100%;
   gap: 1rem;
-  background-color: #fff;
-  padding: 0.4rem 1rem;
+  padding: 0.4rem;
 
-  > div:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    > * {
-      margin: 0;
-    }
+  > * {
+    margin: 0 1rem;
   }
   > div:nth-child(1) {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 
-    > img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
+    > div:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+      > * {
+        margin: 0;
+      }
+    }
+    > div:nth-child(1) {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      > img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 `;

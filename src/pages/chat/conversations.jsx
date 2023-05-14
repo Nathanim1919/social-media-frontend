@@ -19,7 +19,7 @@ export default function Conversations({ conversation, activeUser }) {
       }
     };
     getUser();
-  }, []);
+  }, [id]);
 
   return (
     <Container>
@@ -30,7 +30,7 @@ export default function Conversations({ conversation, activeUser }) {
               className={`${message.sender._id === id ? "sent" : "received"}`}
               key={message._id}
             >
-              {message.sender._id === id && (
+              {/* {message.sender._id === id && (
                 <div>
                   <img
                     src={
@@ -41,9 +41,9 @@ export default function Conversations({ conversation, activeUser }) {
                     alt=""
                   />
                 </div>
-              )}
+              )} */}
               <p>{message.content}</p>
-              {message.sender._id !== id && (
+              {/* {message.sender._id !== id && (
                 <div>
                   <img
                     src={
@@ -54,7 +54,7 @@ export default function Conversations({ conversation, activeUser }) {
                     alt=""
                   />
                 </div>
-              )}
+              )} */}
             </div>
           );
         })}
@@ -73,19 +73,19 @@ const Container = styled.div`
   p {
     margin: 0.53rem;
     box-shadow: 0 3px 5px #dbd9d9;
-    max-width: 60%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    max-width: 100%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     border-top-left-radius: 0px;
-    border-top-right-radius: 20px;
+    border-top-right-radius: 10px;
     padding: 0.3rem;
     font-size: 0.9rem;
   }
   > div {
     display: flex;
     > div {
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       overflow: hidden;
 
@@ -97,21 +97,20 @@ const Container = styled.div`
     }
   }
   > div.sent {
-    align-self: start;
+    align-self: flex-start;
     > p {
       background-color: #9191fd;
       color: #fff;
-      clear: both;
     }
   }
   > div.received {
     align-self: end;
+    justify-self: center;
 
     > p {
       background-color: #ffffff;
       color: #1f1e1e;
-      clear: both;
-      border-top-left-radius: 20px;
+      border-top-left-radius: 10px;
       border-top-right-radius: 0px;
     }
   }
